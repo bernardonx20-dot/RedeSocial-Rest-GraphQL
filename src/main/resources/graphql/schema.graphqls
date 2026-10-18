@@ -1,0 +1,64 @@
+type Query {
+    perfil(id: ID!): Perfil
+    usuario(id: ID!): Usuario
+    post(id: ID!): Post
+    comentario(id: ID!): Comentario
+    curtida(id: ID!): Curtida
+    seguidor(id: ID!): Seguidor
+    postsDoUsuario(usuarioId: ID!): [Post]
+    seguidoresDe(usuarioId: ID!): [Seguidor]
+    seguindoDe(usuarioId: ID!): [Seguidor]
+    feedDoUsuario(usuarioId: ID!): [Post]
+}
+
+type Mutation {
+    criarPerfil(bio: String!, urlFotoPerfil: String): ID
+    criarUsuario(nome: String!, email: String!, senha: String!, perfilId: ID!): Boolean
+    criarPost(texto: String!, urlFoto: String!, autorId: ID!): Boolean
+    criarComentario(texto: String!, autorId: ID!, postId: ID!): Boolean
+    curtir(autorId: ID!, postId: ID!): Boolean
+    seguir(seguidorId: ID!, seguidoId: ID!): Boolean
+}
+
+type Perfil {
+    id: ID!
+    bio: String!
+    urlFotoPerfil: String
+}
+
+type Usuario {
+    id: ID!
+    nome: String!
+    email: String!
+    dataCriacao: String
+    perfil: Perfil
+}
+
+type Post {
+    id: ID!
+    texto: String!
+    urlFoto: String!
+    dataCriacao: String
+    autor: Usuario!
+}
+
+type Comentario {
+    id: ID!
+    texto: String!
+    dataCriacao: String
+    autor: Usuario!
+    post: Post!
+}
+
+type Curtida {
+    id: ID!
+    dataCriacao: String
+    autor: Usuario!
+    post: Post!
+}
+
+type Seguidor {
+    id: ID!
+    seguidor: Usuario!
+    seguido: Usuario!
+}
